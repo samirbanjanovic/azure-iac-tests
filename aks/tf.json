@@ -1,0 +1,398 @@
+[
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors completed jobs (more than 6 hours ago). Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Completed%20job%20count",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "completedJobsCount",
+            "metric_namespace": "Insights.Container/pods",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              }
+            ]
+          }
+        },
+        "name": "Jobs completed more than 6 hours ago for k8stest CI-11"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors container CPU usage. It uses the threshold defined in the config map. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Container%20CPU%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "cpuThresholdViolated",
+            "metric_namespace": "Insights.Container/containers",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              }
+            ]
+          }
+        },
+        "name": "Container CPU usage violates the configured threshold for k8stest CI-19"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "Node CPU utilization across the cluster. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Node%20CPU%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 80.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "cpuUsagePercentage",
+            "metric_namespace": "Insights.Container/nodes",
+            "dimensions": {
+              "values": [
+                "*"
+              ],
+              "operator": "Include",
+              "name": "host"
+            }
+          }
+        },
+        "name": "Node CPU utilization high for k8stest CI-1"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "Pod status monitoring. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Failed%20Pod%20counts",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "podCount",
+            "metric_namespace": "Insights.Container/pods",
+            "dimensions": {
+              "values": [
+                "Failed"
+              ],
+              "operator": "Include",
+              "name": "phase"
+            }
+          }
+        },
+        "name": "Pods in failed state for k8stest CI-4"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors container working set memory usage. It uses the threshold defined in the config map. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Container%20working%20set%20memory%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "memoryWorkingSetThresholdViolated",
+            "metric_namespace": "Insights.Container/containers",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              }
+            ]
+          }
+        },
+        "name": "Container working set memory usage violates the configured threshold for k8stest CI-20"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors disk usage for all nodes and storage devices. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Node%20Disk%20Usage%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 80.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "DiskUsedPercentage",
+            "metric_namespace": "Insights.Container/nodes",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "host"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "device"
+              }
+            ]
+          }
+        },
+        "name": "Disk usage high for k8stest CI-5"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "Node status monitoring. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Node%20NotReady%20status",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "nodesCount",
+            "metric_namespace": "Insights.Container/nodes",
+            "dimensions": {
+              "values": [
+                "NotReady"
+              ],
+              "operator": "Include",
+              "name": "status"
+            }
+          }
+        },
+        "name": "Nodes in not ready status for k8stest CI-3"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "Node working set memory utilization across the cluster. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Node%20working%20set%20memory%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 80.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "memoryWorkingSetPercentage",
+            "metric_namespace": "Insights.Container/nodes",
+            "dimensions": {
+              "values": [
+                "*"
+              ],
+              "operator": "Include",
+              "name": "host"
+            }
+          }
+        },
+        "name": "Node working set memory utilization high for k8stest CI-2"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors number of containers killed due to out of memory(OOM) error. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=OOM%20Killed%20Containers",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "oomKilledContainerCount",
+            "metric_namespace": "Insights.Container/pods",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              }
+            ]
+          }
+        },
+        "name": "Containers getting OOM killed for k8stest CI-6"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors PV usage. It uses the threshold defined in the config map. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Persistent%20Volume%20Usage%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "pvUsageThresholdViolated",
+            "metric_namespace": "Insights.Container/persistentvolumes",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "podName"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetesNamespace"
+              }
+            ]
+          }
+        },
+        "name": "PV usage violates the configured threshold for k8stest CI-21"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors pods in the ready state. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Pods%20ready%20%25",
+        "criteria": {
+          "allOf": {
+            "threshold": 80.0,
+            "operator": "LessThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "PodReadyPercentage",
+            "metric_namespace": "Insights.Container/pods",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              }
+            ]
+          }
+        },
+        "name": "Pods not in ready state for k8stest CI-8"
+      }
+    }
+  },
+  {
+    "resource": {
+      "azurerm_monitor_metric_alert": {
+        "scopes": "${var.aks_cluster_id}",
+        "resource_group_name": "${var.resource_group_name}",
+        "description": "This alert monitors number of containers restarting across the cluster. Check insights here: https://portal.azure.com/#resource/subscriptions/16370fca-8e3f-4920-9c3b-ca98f1791ac1/resourcegroups/rg-together-civet/providers/Microsoft.ContainerService/managedClusters/k8stest/infrainsights?feature.citracealert=Restarting%20container%20count",
+        "criteria": {
+          "allOf": {
+            "threshold": 0.0,
+            "operator": "GreaterThan",
+            "aggregation": "Average",
+            "skipMetricValidation": true,
+            "metric_name": "restartingContainerCount",
+            "metric_namespace": "Insights.Container/pods",
+            "dimensions": [
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "kubernetes namespace"
+              },
+              {
+                "values": [
+                  "*"
+                ],
+                "operator": "Include",
+                "name": "controllerName"
+              }
+            ]
+          }
+        },
+        "name": "Restarting container count for k8stest CI-7"
+      }
+    }
+  }
+]
