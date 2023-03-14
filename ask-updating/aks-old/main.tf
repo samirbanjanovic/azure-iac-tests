@@ -8,9 +8,6 @@ resource "azurerm_resource_group" "rg" {
   name     = random_pet.rg_name.id
 }
 
-resource "random_id" "log_analytics_workspace_name_suffix" {
-  byte_length = 8
-}
 
 resource "azurerm_log_analytics_workspace" "test" {
   location            = var.log_analytics_workspace_location
